@@ -5,7 +5,7 @@ public class ChristmasTree {
         
         int height = 10; // Altura fija del árbol de Navidad
         Random random = new Random();
-        System.out.print("Programa de arbol de navidad ")
+        System.out.print("Programa de arbol de navidad ***")
         // Dibujar la parte superior del árbol
         for (int i = 1; i <= height; i++) {
             for (int j = height; j > i; j--) {
