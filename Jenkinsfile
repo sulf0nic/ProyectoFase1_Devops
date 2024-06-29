@@ -25,7 +25,7 @@ pipeline {
         stage('Compilar Aplicación') {
             steps {
                 script {
-                    sh 'javac -d target src/ChristmasTree.java'
+                    sh 'javac -d target ChristmasTree.java'
                 }
             }
         }
