@@ -1,0 +1,13 @@
+# Dockerfile.base
+
+# Usar una imagen oficial de OpenJDK como base
+FROM openjdk:11-jre-slim
+
+# Crear el directorio de trabajo
+WORKDIR /home/ec2-user/JavaAplications
+
+# Exponer el puerto que la aplicación usará
+EXPOSE 8080
+
+# Definir el comando por defecto para la imagen base
+CMD ["java"]
