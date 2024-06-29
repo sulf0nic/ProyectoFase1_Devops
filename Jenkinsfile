@@ -33,7 +33,7 @@ pipeline {
         stage('Empaquetar Aplicación') {
             steps {
                 script {
-                    sh 'jar cf target/ChristmasTree.jar -C target .'
+                    sh 'jar cfm target/ChristmasTree.jar src/MANIFEST.MF -C target .'
                 }
             }
         }
