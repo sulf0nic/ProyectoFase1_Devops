@@ -14,7 +14,7 @@ pipeline {
             }
         }
 
-        stage('Construir Imagen Base') {
+        stage('Construir Imagen Base Java Base') {
             steps {
                 script {
                     sh 'docker build -t ${BASE_IMAGE_NAME} -f Dockerfile.base .'
@@ -22,7 +22,7 @@ pipeline {
             }
         }
 
-        stage('Compilar Aplicación') {
+        stage('Compilar Aplicación app_java') {
             steps {
                 script {
                     sh 'javac -d target src/ChristmasTree.java'
