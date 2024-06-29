@@ -34,6 +34,7 @@ pipeline {
             steps {
                 script {
                     sh 'jar cfm target/ChristmasTree.jar src/MANIFEST.MF -C target .'
+                    sh 'jar tf target/ChristmasTree.jar'
                 }
             }
         }
