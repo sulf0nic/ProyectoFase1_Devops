@@ -14,7 +14,7 @@ public class ChristmasTree {
             for (int k = 1; k <= (2 * i - 1); k++) {
                 // 20% de probabilidad de colocar una esfera
                 if (random.nextDouble() < 0.2) {
-                    System.out.print("O");
+                    System.out.print("0");
                 } else {
                     System.out.print("*");
                 }
