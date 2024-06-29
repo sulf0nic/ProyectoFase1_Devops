@@ -50,7 +50,7 @@ pipeline {
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    sh 'docker run --rm ${APP_IMAGE_NAME}'
+                    sh 'docker run --rm ${APP_IMAGE_NAME} ls -l /home/ec2-user/JavaAplications/target'
                 }
             }
         }
