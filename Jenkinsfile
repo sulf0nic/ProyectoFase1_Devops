@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        BASE_IMAGE_NAME = 'mi_imagen_base_java'
-        APP_IMAGE_NAME = 'mi_imagen_app_java'
+        BASE_IMAGE_NAME = 'javabase'
+        APP_IMAGE_NAME = 'app_java'
     }
 
     stages {
