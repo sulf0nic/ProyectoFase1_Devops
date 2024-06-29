@@ -6,5 +6,8 @@ FROM javabase
 # Copiar el archivo JAR de la aplicación al contenedor
 COPY target/ChristmasTree.jar /home/ec2-user/JavaAplications/ChristmasTree.jar
 
+# Copiar el archivo MANIFEST.MF
+COPY src/MANIFEST.MF /home/ec2-user/JavaAplications/MANIFEST.MF
+
 # Definir el comando para ejecutar la aplicación
 CMD ["java", "-jar", "ChristmasTree.jar"]
