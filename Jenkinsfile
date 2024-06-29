@@ -10,7 +10,6 @@ pipeline {
         stage('Clonar Repositorio') {
             steps {
                 git url: 'https://github.com/sulf0nic/ProyectoFase1_Devops.git', branch: 'master'
-               
             }
         }
 
@@ -25,6 +24,7 @@ pipeline {
         stage('Compilar Aplicación app_java') {
             steps {
                 script {
+                    sh 'mkdir -p target'
                     sh 'javac -d target src/ChristmasTree.java'
                 }
             }
@@ -43,6 +43,14 @@ pipeline {
             steps {
                 script {
                     sh 'docker build -t ${APP_IMAGE_NAME} .'
+                }
+            }
+        }
+
+        stage('Verificar Contenido del Contenedor') {
+            steps {
+                script {
+                    sh 'docker run --rm ${APP_IMAGE_NAME} ls -l /home/ec2-user/JavaAplications/target'
                 }
             }
         }
