@@ -33,6 +33,7 @@ pipeline {
         stage('Empaquetar Aplicación') {
             steps {
                 script {
+                    sh 'mkdir -p target/META-INF'
                     sh 'cp src/MANIFEST.MF target/META-INF/'
                     sh 'jar cfm target/ChristmasTree.jar target/META-INF/MANIFEST.MF -C target .'
                     sh 'jar tf target/ChristmasTree.jar'
