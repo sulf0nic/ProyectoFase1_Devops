@@ -13,7 +13,7 @@ pipeline {
             }
         }
 
-        stage('Construir Imagen Base Java') {
+        stage('Construir Imagen Base') {
             steps {
                 script {
                     docker.build("${BASE_IMAGE_NAME}", '-f Dockerfile.base .')
