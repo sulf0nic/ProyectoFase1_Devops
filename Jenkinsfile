@@ -33,8 +33,8 @@ pipeline {
         stage('Empaquetar Aplicación') {
             steps {
                 script {
-                    sh 'cp src/MANIFEST.MF target/'
-                    sh 'jar cfm target/ChristmasTree.jar target/MANIFEST.MF -C target .'
+                    sh 'cp src/MANIFEST.MF target/META-INF/'
+                    sh 'jar cfm target/ChristmasTree.jar target/META-INF/MANIFEST.MF -C target .'
                     sh 'jar tf target/ChristmasTree.jar'
                 }
             }
@@ -43,7 +43,7 @@ pipeline {
         stage('Construir Imagen de la Aplicación') {
             steps {
                 script {
-                    sh 'docker build --no-cache -t ${APP_IMAGE_NAME} .'
+                    docker.build("${APP_IMAGE_NAME}", '.')
                 }
             }
         }
@@ -51,7 +51,7 @@ pipeline {
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    sh 'java -cp target/ChristmasTree.jar ChristmasTree'
+                    docker.run('--rm', "${APP_IMAGE_NAME}")
                 }
             }
         }
