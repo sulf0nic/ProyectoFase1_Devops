@@ -47,24 +47,20 @@ pipeline {
                 }
             }
         }
-
-        stage('Verificar Contenido del Contenedor') {
-            steps {
-                script {
-                    docker.image("${APP_IMAGE_NAME}").inside {
-                        sh 'ls -l /home/ec2-user/JavaAplications/target'
-                    }
-                }
-            }
-        }
-
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    docker.image("${APP_IMAGE_NAME}").inside {
-                        sh 'java -jar /home/ec2-user/JavaAplications/target/ChristmasTree.jar'
-                    }
+                    sh 'docker inspect -f . ${APP_IMAGE_NAME}'
+                    sh 'docker run --rm ${APP_IMAGE_NAME}'
                 }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                sh 'docker images'
             }
         }
     }
