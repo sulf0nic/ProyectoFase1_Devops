@@ -16,7 +16,7 @@ pipeline {
         stage('Construir Imagen Base Java') {
             steps {
                 script {
-                    docker.build('{BASE_IMAGE_NAME}', '-f Dockerfile.base .')
+                    docker.build("${BASE_IMAGE_NAME}", '-f Dockerfile.base .')
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
         stage('Construir Imagen de la Aplicación') {
             steps {
                 script {
-                    docker.build('${APP_IMAGE_NAME}', '.')
+                    docker.build("${APP_IMAGE_NAME}", '.')
                 }
             }
         }
@@ -51,7 +51,7 @@ pipeline {
         stage('Verificar Contenido del Contenedor') {
             steps {
                 script {
-                    docker.image('${APP_IMAGE_NAME}').inside {
+                    docker.image("${APP_IMAGE_NAME}").inside {
                         sh 'ls -l /home/ec2-user/JavaAplications/target'
                     }
                 }
@@ -61,7 +61,7 @@ pipeline {
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    docker.image('${APP_IMAGE_NAME}').inside {
+                    docker.image("${APP_IMAGE_NAME}").inside {
                         sh 'java -jar /home/ec2-user/JavaAplications/target/ChristmasTree.jar'
                     }
                 }
@@ -69,15 +69,15 @@ pipeline {
         }
     }
 
-post {
-    always {
-        script {
-            // Eliminar la imagen 'javabase'
-            docker.image('${BASE_IMAGE_NAME}').remove()
-            
-            // Eliminar la imagen 'app_java'
-            docker.image('${APP_IMAGE_NAME}').remove()
+    post {
+        always {
+            script {
+                // Eliminar la imagen 'javabase'
+                docker.image("${BASE_IMAGE_NAME}").remove()
+                
+                // Eliminar la imagen 'app_java'
+                docker.image("${APP_IMAGE_NAME}").remove()
+            }
         }
     }
-}
 }
