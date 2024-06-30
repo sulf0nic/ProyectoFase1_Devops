@@ -4,7 +4,6 @@ pipeline {
     environment {
         BASE_IMAGE_NAME = 'java-base'
         APP_IMAGE_NAME = 'java-app'
-        DOCKER_BUILDKIT = 1
     }
 
     stages {
@@ -13,7 +12,7 @@ pipeline {
                 checkout scm
             }
         }
-
+        
         stage('Clonar Repositorio') {
             steps {
                 git 'https://github.com/sulf0nic/ProyectoFase1_Devops.git'
@@ -40,7 +39,12 @@ pipeline {
         stage('Empaquetar Aplicación') {
             steps {
                 script {
-                    sh 'jar cfm target/ChristmasTree.jar src/META-INF/MANIFEST.MF -C target .'
+                    // Crear el directorio META-INF en target y copiar el MANIFEST.MF
+                    sh 'mkdir -p target/META-INF'
+                    sh 'cp src/META-INF/MANIFEST.MF target/META-INF/'
+
+                    // Crear el JAR sin incluir archivos adicionales
+                    sh 'jar cfm target/ChristmasTree.jar target/META-INF/MANIFEST.MF -C target ChristmasTree.class'
                     sh 'jar tf target/ChristmasTree.jar'
                 }
             }
