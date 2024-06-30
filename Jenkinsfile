@@ -51,7 +51,7 @@ pipeline {
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    sh 'java -jar target/ChristmasTree.jar'
+                    sh 'java -cp target/ChristmasTree.jar ChristmasTree'
                 }
             }
         }
