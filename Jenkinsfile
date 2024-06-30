@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        BASE_IMAGE_NAME = 'javabase'
+        APP_IMAGE_NAME = 'app_java'
+    }
+
     stages {
         stage('Clonar Repositorio') {
             steps {
@@ -11,7 +16,7 @@ pipeline {
         stage('Construir Imagen Base Java') {
             steps {
                 script {
-                    docker.build('javabase', '-f Dockerfile.base .')
+                    docker.build('{BASE_IMAGE_NAME}', '-f Dockerfile.base .')
                 }
             }
         }
@@ -38,7 +43,7 @@ pipeline {
         stage('Construir Imagen de la Aplicación') {
             steps {
                 script {
-                    docker.build('app_java', '.')
+                    docker.build('${APP_IMAGE_NAME}', '.')
                 }
             }
         }
@@ -46,7 +51,7 @@ pipeline {
         stage('Verificar Contenido del Contenedor') {
             steps {
                 script {
-                    docker.image('app_java').inside {
+                    docker.image('${APP_IMAGE_NAME}').inside {
                         sh 'ls -l /home/ec2-user/JavaAplications/target'
                     }
                 }
@@ -56,7 +61,7 @@ pipeline {
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    docker.image('app_java').inside {
+                    docker.image('${APP_IMAGE_NAME}').inside {
                         sh 'java -jar /home/ec2-user/JavaAplications/target/ChristmasTree.jar'
                     }
                 }
@@ -64,12 +69,15 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            script {
-                docker.image('javabase').remove()
-                docker.image('app_java').remove()
-            }
+post {
+    always {
+        script {
+            // Eliminar la imagen 'javabase'
+            docker.image('${BASE_IMAGE_NAME}').remove()
+            
+            // Eliminar la imagen 'app_java'
+            docker.image('${APP_IMAGE_NAME}').remove()
         }
     }
+}
 }
