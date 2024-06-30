@@ -56,7 +56,8 @@ pipeline {
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    sh "docker run --rm ${APP_IMAGE_NAME}"
+                    //sh "docker run --rm ${APP_IMAGE_NAME}"
+                    sh 'java -cp target/ChristmasTree.jar ChristmasTree'
                 }
             }
         }
