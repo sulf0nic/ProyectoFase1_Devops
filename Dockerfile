@@ -1,7 +1,7 @@
 # Dockerfile
 
 # Usar la imagen base que acabamos de crear
-FROM javabase
+FROM java-base
 
 # Establecer el directorio de trabajo
 WORKDIR /home/ec2-user/JavaAplications
