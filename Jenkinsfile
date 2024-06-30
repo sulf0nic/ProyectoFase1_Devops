@@ -51,6 +51,7 @@ pipeline {
             steps {
                 script {
                     sh 'java -cp target/ChristmasTree.jar ChristmasTree'
+                    sh 'cd /home/ec2-user/JavaAplications'
                     sh 'docker run --rm ${APP_IMAGE_NAME}'
                 }
             }
