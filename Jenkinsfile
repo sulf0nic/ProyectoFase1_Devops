@@ -1,22 +1,17 @@
 pipeline {
     agent any
 
-    environment {
-        BASE_IMAGE_NAME = 'javabase'
-        APP_IMAGE_NAME = 'app_java'
-    }
-
     stages {
         stage('Clonar Repositorio') {
             steps {
-                git url: 'https://github.com/sulf0nic/ProyectoFase1_Devops.git', branch: 'master'
+                git 'https://github.com/sulf0nic/ProyectoFase1_Devops.git'
             }
         }
 
-        stage('Construir Imagen Base Java Base') {
+        stage('Construir Imagen Base Java') {
             steps {
                 script {
-                    sh 'docker build -t ${BASE_IMAGE_NAME} -f Dockerfile.base .'
+                    docker.build('javabase', '-f Dockerfile.base .')
                 }
             }
         }
@@ -43,7 +38,7 @@ pipeline {
         stage('Construir Imagen de la Aplicación') {
             steps {
                 script {
-                    sh 'docker build -t ${APP_IMAGE_NAME} .'
+                    docker.build('app_java', '.')
                 }
             }
         }
@@ -51,7 +46,9 @@ pipeline {
         stage('Verificar Contenido del Contenedor') {
             steps {
                 script {
-                    sh 'docker run --rm ${APP_IMAGE_NAME} ls -l /home/ec2-user/JavaAplications/target'
+                    docker.image('app_java').inside {
+                        sh 'ls -l /home/ec2-user/JavaAplications/target'
+                    }
                 }
             }
         }
@@ -59,7 +56,9 @@ pipeline {
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    sh 'docker run --rm ${APP_IMAGE_NAME}'
+                    docker.image('app_java').inside {
+                        sh 'java -jar /home/ec2-user/JavaAplications/target/ChristmasTree.jar'
+                    }
                 }
             }
         }
@@ -68,7 +67,8 @@ pipeline {
     post {
         always {
             script {
-                sh 'docker images'
+                docker.image('javabase').remove()
+                docker.image('app_java').remove()
             }
         }
     }
