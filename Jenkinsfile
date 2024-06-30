@@ -68,16 +68,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            script {
-                // Eliminar la imagen 'java-base'
-                docker.image("${BASE_IMAGE_NAME}").remove()
-                
-                // Eliminar la imagen 'java-app'
-                docker.image("${APP_IMAGE_NAME}").remove()
-            }
-        }
-    }
 }
