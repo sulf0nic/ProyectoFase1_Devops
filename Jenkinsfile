@@ -7,6 +7,12 @@ pipeline {
     }
 
     stages {
+        stage('Declarative: Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+        
         stage('Clonar Repositorio') {
             steps {
                 git 'https://github.com/sulf0nic/ProyectoFase1_Devops.git'
