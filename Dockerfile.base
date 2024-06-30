@@ -1,7 +1,7 @@
 # Dockerfile.base
 
-# Usar una imagen oficial de OpenJDK como base
-FROM openjdk:11-jre-slim
+# Usar una imagen oficial de Amazon Corretto 11 como base
+FROM amazoncorretto:11
 
 # Crear el directorio de trabajo
 WORKDIR /home/ec2-user/JavaAplications
