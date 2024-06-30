@@ -43,7 +43,7 @@ pipeline {
         stage('Construir Imagen de la Aplicación') {
             steps {
                 script {
-                    docker.build("${APP_IMAGE_NAME}", '.')
+                    sh 'docker build --no-cache -t java-app .'
                 }
             }
         }
