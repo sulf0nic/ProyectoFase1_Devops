@@ -39,12 +39,7 @@ pipeline {
         stage('Empaquetar Aplicación') {
             steps {
                 script {
-                    // Crear el directorio META-INF en target y copiar el MANIFEST.MF
-                    sh 'mkdir -p target/META-INF'
-                    sh 'cp src/META-INF/MANIFEST.MF target/META-INF/'
-
-                    // Crear el JAR sin incluir archivos adicionales
-                    sh 'jar cfm target/ChristmasTree.jar target/META-INF/MANIFEST.MF -C target ChristmasTree.class'
+                    sh 'jar cfm target/ChristmasTree.jar src/META-INF/MANIFEST.MF -C target .'
                     sh 'jar tf target/ChristmasTree.jar'
                 }
             }
