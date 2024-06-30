@@ -52,7 +52,7 @@ pipeline {
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    docker.run('--rm', "${APP_IMAGE_NAME}")
+                    sh "docker run --rm ${APP_IMAGE_NAME}"
                 }
             }
         }
