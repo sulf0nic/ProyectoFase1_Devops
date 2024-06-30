@@ -65,7 +65,6 @@ pipeline {
                     sh 'docker run --rm ${APP_IMAGE_NAME}'
                     }
                 }
-            }
         }
     }
 }
