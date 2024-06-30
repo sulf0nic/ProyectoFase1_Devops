@@ -2,21 +2,21 @@ pipeline {
     agent any
 
     environment {
-        BASE_IMAGE_NAME = 'java-base'
-        APP_IMAGE_NAME = 'java-app'
+        BASE_IMAGE_NAME = 'javabase'
+        APP_IMAGE_NAME = 'app_java'
     }
 
     stages {
         stage('Clonar Repositorio') {
             steps {
-                git 'https://github.com/sulf0nic/ProyectoFase1_Devops.git'
+                git url: 'https://github.com/sulf0nic/ProyectoFase1_Devops.git', branch: 'master'
             }
         }
 
-        stage('Construir Imagen Base Java') {
+        stage('Construir Imagen Base Java Base') {
             steps {
                 script {
-                    docker.build("${BASE_IMAGE_NAME}", '-f Dockerfile.base .')
+                    sh 'docker build -t ${BASE_IMAGE_NAME} -f Dockerfile.base .'
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
         stage('Construir Imagen de la Aplicación') {
             steps {
                 script {
-                    docker.build("${APP_IMAGE_NAME}", '.')
+                    sh 'docker build -t ${APP_IMAGE_NAME} .'
                 }
             }
         }
@@ -51,9 +51,7 @@ pipeline {
         stage('Verificar Contenido del Contenedor') {
             steps {
                 script {
-                    docker.image("${APP_IMAGE_NAME}").inside {
-                        sh 'ls -l /home/ec2-user/JavaAplications/target'
-                    }
+                    sh 'docker run --rm ${APP_IMAGE_NAME} ls -l /home/ec2-user/JavaAplications/target'
                 }
             }
         }
@@ -61,9 +59,7 @@ pipeline {
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    docker.image("${APP_IMAGE_NAME}").inside {
-                        sh 'java -jar /home/ec2-user/JavaAplications/target/ChristmasTree.jar'
-                    }
+                    sh 'docker run --rm ${APP_IMAGE_NAME}'
                 }
             }
         }
@@ -72,11 +68,7 @@ pipeline {
     post {
         always {
             script {
-                // Eliminar la imagen 'java-base'
-                docker.image("${BASE_IMAGE_NAME}").remove()
-                
-                // Eliminar la imagen 'java-app'
-                docker.image("${APP_IMAGE_NAME}").remove()
+                sh 'docker images'
             }
         }
     }
