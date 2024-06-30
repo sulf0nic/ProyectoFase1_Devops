@@ -43,15 +43,15 @@ pipeline {
         stage('Construir Imagen de la Aplicación') {
             steps {
                 script {
-                    sh 'docker build --no-cache -t java-app .'
+                    sh 'docker build --no-cache -t ${APP_IMAGE_NAME} .'
                 }
             }
         }
+
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    sh 'java -cp target/ChristmasTree.jar ChristmasTree'
-                    sh 'docker run --rm ${APP_IMAGE_NAME}'
+                    sh 'java -jar target/ChristmasTree.jar'
                 }
             }
         }
