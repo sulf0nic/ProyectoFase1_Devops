@@ -1,3 +1,6 @@
+# Dockerfile
+
+# Usar la imagen base que acabamos de crear
 FROM java-base
 
 # Establecer el directorio de trabajo
