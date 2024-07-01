@@ -30,7 +30,7 @@ pipeline {
         stage('Compilar Aplicación app_java') {
             steps {
                 script {
-                    sh 'mkdir -p target'
+                    //sh 'mkdir -p target'
                     sh 'javac -d target src/ChristmasTree.java'
                 }
             }
@@ -57,7 +57,7 @@ pipeline {
             steps {
                 script {
                     sh "docker run --rm ${APP_IMAGE_NAME}"
-                    sh 'java -cp target/ChristmasTree.jar ChristmasTree'
+                    //sh 'java -cp target/ChristmasTree.jar ChristmasTree'
                 }
             }
         }
