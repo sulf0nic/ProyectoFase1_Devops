@@ -22,7 +22,7 @@ pipeline {
         stage('Construir Imagen Base') {
             steps {
                 script {
-                    docker.build("${BASE_IMAGE_NAME}", '-f Dockerfile.base .')
+                    docker.build("-t ${BASE_IMAGE_NAME}", '-f Dockerfile.base .')
                 }
             }
         }
@@ -39,7 +39,7 @@ pipeline {
         stage('Empaquetar Aplicación') {
             steps {
                 script {
-                    sh 'jar cfm target/ChristmasTree.jar src/META-INF/MANIFEST.MF -C target .'
+                    sh 'jar cfm target/ChristmasTree.jar target/MANIFEST.MF -C target .'
                     sh 'jar tf target/ChristmasTree.jar'
                 }
             }
@@ -48,7 +48,7 @@ pipeline {
         stage('Construir Imagen de la Aplicación') {
             steps {
                 script {
-                    docker.build("${APP_IMAGE_NAME}", '.')
+                    docker.build("-t ${APP_IMAGE_NAME}", '.')
                 }
             }
         }
@@ -56,7 +56,7 @@ pipeline {
         stage('Ejecutar la Aplicación') {
             steps {
                 script {
-                    //sh "docker run --rm ${APP_IMAGE_NAME}"
+                    sh "docker run --rm ${APP_IMAGE_NAME}"
                     sh 'java -cp target/ChristmasTree.jar ChristmasTree'
                 }
             }
