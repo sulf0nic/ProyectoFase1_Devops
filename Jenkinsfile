@@ -66,7 +66,7 @@ pipeline {
         stage('Deploy Infrastructure') {
             steps {
                 script {
-                    // Inicializar Terraform
+                    // Inicializar 
                     sh 'terraform init'
                     // Planificar y generar el archivo tfplan
                     sh 'terraform plan -out=tfplan'
