@@ -1,7 +1,7 @@
 resource "aws_instance" "exampleF3" {
-  ami           = "ami-06c68f701d8090592"  # ID de la AMI que se utilizará
-  instance_type = "t2.medium"              # Tipo de instancia EC2
-  subnet_id     = "subnet-02a177fb8ef64efa6"  # ID de la subred donde se lanzará la instancia
+  ami           = "ami-08be1e3e6c338b037"  # ID de la AMI que se utilizará
+  instance_type = "t2.micro"              # Tipo de instancia EC2
+  subnet_id     = "subnet-02c29b0d763be0fbc"  # ID de la subred donde se lanzará la instancia
   key_name      = "Fase3"                  # Nombre de la clave SSH para acceder a la instancia
 
   tags = {
