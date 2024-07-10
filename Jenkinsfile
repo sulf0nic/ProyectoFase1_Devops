@@ -61,7 +61,26 @@ pipeline {
                 }
             }
         }
-    }
+        stage('Deploy Infrastructure') {
+            steps {
+                script {
+                    // Inicializar Terraform
+                    sh 'terraform init'
+                    // Planificar y generar el archivo tfplan
+                    sh 'terraform plan -out=tfplan'
+                    // Aplicar el plan generado
+                    sh 'terraform apply "tfplan"'
+                }
+            }
+        }
+        stage('Destroy Infrastructure') {
+            steps {
+                script {
+                    // Destruir la infraestructura creada (opcional)
+                    sh 'terraform destroy -auto-approve'
+                }
+            }
+        }
 
     post {
         always {
