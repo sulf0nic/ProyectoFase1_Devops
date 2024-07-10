@@ -4,6 +4,7 @@ pipeline {
     environment {
         BASE_IMAGE_NAME = 'java-base'
         APP_IMAGE_NAME = 'java-app'
+        AWS_DEFAULT_REGION = 'us-east-1'
     }
 
     stages {
