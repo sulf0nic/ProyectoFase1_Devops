@@ -75,14 +75,6 @@ pipeline {
                 }
             }
         }
-        stage('Destroy Infrastructure') {
-            steps {
-                script {
-                    // Destruir la infraestructura creada (opcional)
-                    sh 'terraform destroy -auto-approve'
-                }
-            }
-        }
     }
 
     post {
