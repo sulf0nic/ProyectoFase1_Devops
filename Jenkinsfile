@@ -5,6 +5,7 @@ pipeline {
         BASE_IMAGE_NAME = 'java-base'
         APP_IMAGE_NAME = 'java-app'
         AWS_DEFAULT_REGION = 'us-east-1'
+        AWS_CREDENTIALS = credentials('00aeae27-0581-42ee-8948-ec519233ef45')
     }
 
     stages {
